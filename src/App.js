@@ -16,12 +16,21 @@ const { width, height } = Dimensions.get('window')
 const data = [
   {
     type: 'text',
-    content: 'Conversas'
+    content: 'Conversas',
+    style: {
+      fontSize: 16,
+      activeColor: 'green',
+      inactiveColor: 'blue'
+    }
   },
   {
     type: 'icon',
     content: 'md-menu',
-    size: 30
+    style: {
+      size: 40,
+      activeColor: 'green',
+      inactiveColor: 'blue'
+    }
   },
   {
     type: 'image',
@@ -50,12 +59,8 @@ class App extends Component {
   render() {
     return (
       <NavBar
-      icons={[ 'md-menu', 'md-notifications-outline', 'md-person' ]}
-      texts={[ 'Conversas', 'Status', 'Chamadas' ]}
       data = {data}
-      type='icons'
-      iconSize={40}
-      colors={[this.state.highlightColor, 'blue', this.state.barColor]}
+      backgroundColor={this.state.barColor}
       >
         <ButtonScreen
         backgroundColor={'red'}

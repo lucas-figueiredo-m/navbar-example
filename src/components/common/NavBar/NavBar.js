@@ -60,60 +60,40 @@ class NavBar extends Component {
 
                 </ScrollView>
                 
-                <View style={[styles.navContainer, { backgroundColor: this.props.colors[2], width: width }]}>
+                <View style={[styles.navContainer, { backgroundColor: this.props.backgroundColor, width: width }]}>
                     {
-                        this.props.type == 'icons'
-                        ?
-                        this.props.icons.map( (iconText, index) => {
-                            return (
-                                <TouchableOpacity
-                                key={index}
-                                onPress={ () => this.scroll.scrollTo({ x: index * width, animated: true })}
-                                style={{ }}
-                                >
-                                    <Ionicon
-                                    name={iconText}
-                                    size={this.props.iconSize}
-                                    color={
-                                        index == this.state.slideIndex
-                                        ?
-                                        this.props.colors[0]
-                                        :
-                                        this.props.colors[1]
-                                    }
-                                    />
-                                </TouchableOpacity>
-                            )    
+                        this.props.data.map( (item, index) => {
+                            if ( item.type == 'icon' ) {
+                                return (
+                                    <TouchableOpacity key={index}
+                                    onPress={ () => this.scroll.scrollTo({ x: index * width, animated: true })}
+                                    >
+                                        <Ionicon
+                                        name={item.content}
+                                        size={item.style.size}
+                                        color={ index == this.state.slideIndex ? item.style.activeColor : item.style.inactiveColor }
+                                        />
+                                    </TouchableOpacity>
+                                )  
+                            } else if ( item.type == 'text' ) {
+                                return (
+                                    <TouchableOpacity key={index}
+                                    onPress={ () => this.scroll.scrollTo({ x: index * width, animated: true }) }
+                                    >
+                                        <Text style={{ color: index == this.state.slideIndex ? item.style.activeColor : item.style.inactiveColor }}>{item.content}</Text>
+                                    </TouchableOpacity>
+                                ) 
+                            } else if ( item.type == 'image' ) {
+                                return (
+                                    <TouchableOpacity
+                                    key={index}
+                                    onPress={ () => this.scroll.scrollTo({ x: index * width, animated: true }) }
+                                    >
+                                        <Image resizeMode='contain' style={{ width: 30}} source={index == this.state.slideIndex ? item.content.activeImage : item.content.inactiveImage} />
+                                    </TouchableOpacity>
+                                )
+                            }
                         })
-                        :
-                        this.props.type == 'texts'
-                        ?
-                        this.props.texts.map( (text, index) => {
-                            return (
-                                <TouchableOpacity
-                                key={index}
-                                onPress={ () => this.scroll.scrollTo({ x: index * width, animated: true }) }
-                                >
-                                    <Text style={{ color: index == this.state.slideIndex ? this.props.colors[0] : this.props.colors[1] }}>{text}</Text>
-                                    
-                                </TouchableOpacity>
-                            )    
-                        })
-                        :
-                        this.props.type == 'images'
-                        ?
-                        this.props.texts.map( (image, index) => {
-                            return (
-                                <TouchableOpacity
-                                key={index}
-                                onPress={ () => this.scroll.scrollTo({ x: index * width, animated: true }) }
-                                >
-                                    <Image source={image} />
-                                </TouchableOpacity>
-                            )
-                        })
-                        :
-                        null
                     }
                 </View>
                 
