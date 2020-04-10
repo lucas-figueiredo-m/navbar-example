@@ -1,17 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from 'react';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
 import { NavBar } from './components/common';
 import ButtonScreen from './components/scenes/ButtonScreen/ButtonScreen';
-
-const { width, height } = Dimensions.get('window')
 
 const data = [
   {
@@ -38,7 +27,16 @@ const data = [
       activeImage: require('../assets/img/industryActive.png'),
       inactiveImage: require('../assets/img/industryInactive.png'),
     }
-  }
+  },
+  {
+    type: 'icon',
+    content: 'md-person',
+    style: {
+      size: 40,
+      activeColor: 'green',
+      inactiveColor: 'blue'
+    }
+  },
 ]
 
 class App extends Component {
