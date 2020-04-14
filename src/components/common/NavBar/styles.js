@@ -5,7 +5,7 @@ const { width, height } = Dimensions.get('window');
 export const styles = StyleSheet.create({
     root: {
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
     },
 
     mainContainer: {
@@ -16,13 +16,18 @@ export const styles = StyleSheet.create({
         height: height * 0.075,
         // width: width,
         //position: 'absolute',
-        bottom: 0,
+        // bottom: 0,
         elevation: 20,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around'
         // borderTopWidth: 2,
         // borderTopColor: colors.lightGrey
+    },
+
+    slideBackground: {
+        height: height * 0.0075,
+        elevation: 20,
     },
 
     children: {
