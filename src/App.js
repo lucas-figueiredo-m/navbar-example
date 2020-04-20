@@ -1,45 +1,8 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
-import { NavBar } from './components/common';
+import NavBar from './components/common/NavBar/NavBar';
 import ButtonScreen from './components/scenes/ButtonScreen/ButtonScreen';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-
-const data = [
-  {
-    type: 'text',
-    content: 'Conversas',
-    style: {
-      fontSize: 16,
-      activeColor: 'green',
-      inactiveColor: 'blue'
-    }
-  },
-  {
-    type: 'icon',
-    content: 'md-menu',
-    style: {
-      size: 40,
-      activeColor: 'green',
-      inactiveColor: 'blue'
-    }
-  },
-  {
-    type: 'image',
-    content: {
-      activeImage: require('../assets/img/industryActive.png'),
-      inactiveImage: require('../assets/img/industryInactive.png'),
-    }
-  },
-  {
-    type: 'icon',
-    content: 'md-person',
-    style: {
-      size: 40,
-      activeColor: 'green',
-      inactiveColor: 'blue'
-    }
-  },
-]
 
 const testData = [
     'ios-home',

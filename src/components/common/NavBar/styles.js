@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
     },
 
     slideBackground: {
-        height: height * 0.0075,
+        height: height * 0.005,
         elevation: 20,
     },
 
