@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
 import { styles } from './styles'
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import { TextField } from '../../common';
+import { TextField } from 'react-native-component-lib';
 
 const ButtonScreen = () => {
     const [email, setEmail] = useState('');

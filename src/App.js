@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
-import NavBar from './components/common/NavBar/NavBar';
+import { NavBar } from 'react-native-component-lib';
 import ButtonScreen from './components/scenes/ButtonScreen/ButtonScreen';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 
