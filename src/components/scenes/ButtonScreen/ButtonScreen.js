@@ -22,7 +22,7 @@ const ButtonScreen = () => {
             <TextField label='E-mail' value={email}
             onChangeText={ (text) => setEmail(text) }
             focusColor={'#37027D'} blurColor={'#666666'}
-            secureTextEntry={secureText}
+            secureTextEntry={secureText} backgroundColor={'#d9d9d9'}
             secureTextComponent={ (secured) => secureTextComponent(secured) }
             labelStyle={styles.labelStyle}
             containerStyle={styles.textContainerStyle}
@@ -30,7 +30,7 @@ const ButtonScreen = () => {
             errorStyle={styles.errorStyle}
             highlightFontOnFocus={true}
             outline={true} borderRadius={6} errorColor={'red'}
-            error={'error'} errorIcon={ () => <Ionicon name='ios-close' size={24} color='red' />}
+            error={'Internal server error'} errorIcon={ () => <Ionicon name='ios-close' size={24} color='red' />}
             />
         </View>
     )

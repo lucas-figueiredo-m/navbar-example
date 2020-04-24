@@ -5,7 +5,6 @@ import { styles } from './styles';
 const { width, height } = Dimensions.get('window');
 
 const TextField = (props) => {
-  console.log('height', 0.0218*height)
   const [isFocused, setFocus]            = useState(false);
   const [focusColor, setFocusColor]      = useState('#aaa');
   const [blurColor, setBlurColor]        = useState('#000');
@@ -35,6 +34,7 @@ const TextField = (props) => {
 
   const labelStyle = {
     position: 'absolute',
+    zIndex: 1,
     left: props.outline ? width * 0.025 : 0,
     bottom: animatedLabel.interpolate({
       inputRange: [0, 1, 2],
@@ -59,6 +59,7 @@ const TextField = (props) => {
       inputRange: [0, 1, 2],
       outputRange: [1, 1.5, 1.5]
     }),
+    backgroundColor: props.backgroundColor,
     borderRadius: props.borderRadius,
     borderColor: animatedView.interpolate({
       inputRange: [0, 1, 2],
@@ -68,6 +69,7 @@ const TextField = (props) => {
 
   const normalViewStyle = {
     borderBottomWidth: 1,
+    backgroundColor: props.backgroundColor,
     borderRadius: props.borderRadius,
     borderBottomColor: animatedView.interpolate({
       inputRange: [0, 1, 2],
