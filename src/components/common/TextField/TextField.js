@@ -7,14 +7,16 @@ const { width, height } = Dimensions.get('window');
 const TextField = (props) => {
   console.log('height', 0.0218*height)
   const [isFocused, setFocus]            = useState(false);
-  const [isAnimatedFocused, setAnimated] = useState( new Animated.Value(props.value === '' ? 0 : 1) )
-  const [animatedView, setAnimatedView]  = useState( new Animated.Value(props.value === '' ? 0 : 1) )
   const [focusColor, setFocusColor]      = useState('#aaa');
   const [blurColor, setBlurColor]        = useState('#000');
+  const [errorColor, setErrorColor]      = useState('red');
   const [viewHeight, getViewHeight]      = useState(0)
 
+  const animatedLabel = new Animated.Value(props.value === '' ? 0 : 1);
+  const animatedView  = new Animated.Value(props.value === '' ? 0 : 1);
+
   useEffect( () => {
-    Animated.timing( isAnimatedFocused, {
+    Animated.timing( animatedLabel, {
       toValue: (isFocused || props.value !== '') ? 1 : 0,
       duration: 200,
       useNativeDriver: false
@@ -28,20 +30,21 @@ const TextField = (props) => {
 
     if ( props.focusColor )  setFocusColor(props.focusColor) 
     if ( props.blurColor )  setBlurColor(props.blurColor)
+    if ( props.errorColor )  setErrorColor(props.errorColor)
   })
 
   const labelStyle = {
     position: 'absolute',
     left: props.outline ? width * 0.025 : 0,
-    bottom: isAnimatedFocused.interpolate({
+    bottom: animatedLabel.interpolate({
       inputRange: [0, 1],
       outputRange: [0, props.outline ? viewHeight - 0.033 * height : viewHeight - 0.0218 * height ],
     }),
-    fontSize: isAnimatedFocused.interpolate({
+    fontSize: animatedLabel.interpolate({
       inputRange: [0, 1],
       outputRange: [20, 14],
     }),
-    color: isAnimatedFocused.interpolate({
+    color: animatedLabel.interpolate({
       inputRange: [0, 1],
       outputRange: [blurColor, focusColor],
     }),
@@ -100,7 +103,7 @@ const TextField = (props) => {
       {
         props.error
         ?
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={styles.errorContainer}>
           {
             props.errorIcon
             ?

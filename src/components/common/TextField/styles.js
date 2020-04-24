@@ -10,6 +10,11 @@ export const styles = StyleSheet.create({
         bottom: height * 0.01
     },
 
+    errorContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+
     errorText: {
         marginLeft: width * 0.02
     }
