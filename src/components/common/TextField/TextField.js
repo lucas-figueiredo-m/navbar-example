@@ -47,7 +47,7 @@ const TextField = (props) => {
     }),
   }
 
-  const viewStyle = {
+  const outlineViewStyle = {
     borderWidth: animatedView.interpolate({
       inputRange: [0, 1],
       outputRange: [1, 1.5]
@@ -58,11 +58,20 @@ const TextField = (props) => {
       outputRange: [blurColor, focusColor]
     })
   }
+
+  const normalViewStyle = {
+    borderBottomWidth: 1,
+    borderRadius: props.borderRadius,
+    borderBottomColor: animatedView.interpolate({
+      inputRange: [0, 1],
+      outputRange: [blurColor, focusColor]
+    })
+  }
   
   return (
     <Animated.View
     onLayout={ (event) => getViewHeight(event.nativeEvent.layout.height) }
-    style={[ props.containerStyle, props.outline ? viewStyle : { borderBottomWidth: 1, borderBottomColor: (isFocused || props.value !== '') ? focusColor : blurColor } ]}
+    style={[ props.containerStyle, props.outline ? outlineViewStyle : normalViewStyle ]}
     >
       
       <Animated.Text style={[labelStyle, props.labelStyle]}>

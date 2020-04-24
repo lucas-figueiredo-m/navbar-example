@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
 
     textContainerStyle: {
         width: '50%',
-        height: 55,
+        height: 80,
         marginTop: 5,
         backgroundColor: '#d9d9d9',
     },
@@ -32,5 +32,9 @@ export const styles = StyleSheet.create({
 
     labelStyle: {
         letterSpacing: 0.5
+    },
+
+    errorStyle: {
+        color: 'red'
     }
 })

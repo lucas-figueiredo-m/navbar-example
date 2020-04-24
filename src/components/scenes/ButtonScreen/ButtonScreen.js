@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
 import { styles } from './styles'
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import { TextField } from 'react-native-component-lib';
+// import { TextField } from 'react-native-component-lib';
+import { TextField } from '../../common';
 
 const ButtonScreen = () => {
     const [email, setEmail] = useState('');
@@ -27,7 +28,8 @@ const ButtonScreen = () => {
             containerStyle={styles.textContainerStyle}
             textStyle={styles.textStyle}
             highlightFontOnFocus={true}
-            outline={true} borderRadius={6}
+            outline={false} borderRadius={6}
+            error={'error'} errorIcon={ () => <Ionicon></Ionicon>}
             />
         </View>
     )
