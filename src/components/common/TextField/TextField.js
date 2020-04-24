@@ -69,35 +69,52 @@ const TextField = (props) => {
   }
   
   return (
-    <Animated.View
-    onLayout={ (event) => getViewHeight(event.nativeEvent.layout.height) }
-    style={[ props.containerStyle, props.outline ? outlineViewStyle : normalViewStyle ]}
-    >
-      
-      <Animated.Text style={[labelStyle, props.labelStyle]}>
-        {props.label}
-      </Animated.Text>
+    <View style={props.containerStyle}>
+      <Animated.View
+      onLayout={ (event) => getViewHeight(event.nativeEvent.layout.height) }
+      style={[ { flex: 1 }, props.outline ? outlineViewStyle : normalViewStyle ]}
+      >
+        
+        <Animated.Text style={[labelStyle, props.labelStyle]}>
+          {props.label}
+        </Animated.Text>
 
-      <TextInput
-      {...props}
-      onFocus={ () => setFocus(true) }
-      onBlur={ () => setFocus(false)}
-      blurOnSubmit={true}
-      style={[ props.textStyle, { flex: 1, color: (isFocused || props.value !== '') ? props.highlightFontOnFocus ? focusColor : blurColor : blurColor } ]}
-      />
+        <TextInput
+        {...props}
+        onFocus={ () => setFocus(true) }
+        onBlur={ () => setFocus(false)}
+        blurOnSubmit={true}
+        style={[ props.textStyle, { flex: 1, color: (isFocused || props.value !== '') ? props.highlightFontOnFocus ? focusColor : blurColor : blurColor } ]}
+        />
+        {
+          props.secureTextComponent
+          ?
+          <View style={[styles.secureComponent, props.outline ? { right: width * 0.02 } : null]}>
+            { props.secureTextComponent(props.secureTextEntry) }
+          </View>
+          :
+          null
+        }
+      </Animated.View>
+
       {
-        props.secureTextComponent
+        props.error
         ?
-        <View style={[styles.secureComponent, props.outline ? { right: width * 0.02 } : null]}>
-          { props.secureTextComponent(props.secureTextEntry) }
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          {
+            props.errorIcon
+            ?
+            props.errorIcon()
+            :
+            null
+          }
+          <Text style={[ styles.errorText, props.errorStyle ]}>{props.error}</Text>
         </View>
         :
         null
       }
-
-      
-      
-    </Animated.View>
+    </View>
+    
   );
 };
 

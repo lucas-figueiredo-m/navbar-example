@@ -8,5 +8,9 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         right: 0,
         bottom: height * 0.01
+    },
+
+    errorText: {
+        marginLeft: width * 0.02
     }
 })
