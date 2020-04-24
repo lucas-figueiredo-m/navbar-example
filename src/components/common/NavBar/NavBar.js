@@ -1,92 +1,90 @@
-import React, {Component} from 'react';
-import { ScrollView, View, TouchableOpacity, Dimensions } from 'react-native';
+import React, { Component, useState, useEffect, useRef } from 'react';
+import { ScrollView, View, TouchableOpacity, Dimensions, Animated } from 'react-native';
 import { styles } from './styles'
 
 const window = Dimensions.get("window");
 const screen = Dimensions.get("screen");
 
-class NavBar extends Component {
-    state = {
-        slideIndex: 0,
-        xOffset: 0,
-        dimensions: {
-          window,
-          screen
+const NavBar = ({ children, onTop, data, animatedEffect, showBar, backgroundColor, barColor, callbackRender }) => {
+    const [slideIndex, setSlideIndex] = useState(0);
+    const [dimensions, setDimensions] = useState({ window, screen });
+    const [xOffset, setXOffset]       = useState( new Animated.ValueXY() );
+
+    const scroll = useRef();
+    const onChange = ({ window, screen }) => {
+        setDimensions({ window, screen });
+    }
+
+    useEffect( () => {
+        Dimensions.addEventListener("change", onChange);
+
+        return () => {
+            Dimensions.removeEventListener("change", onChange);
         }
-    }
+    }, [])
 
-    onChange = ({ window, screen }) => {
-        this.setState({ dimensions: { window, screen } });
-    };
+    const width = dimensions.window.width;
 
-    componentDidMount() {
-        Dimensions.addEventListener("change", this.onChange);
-    }
+    return (
+        <View style={[styles.root, { flexDirection: onTop ? 'column-reverse' : 'column'}]}>
+            <ScrollView
+            style={styles.mainContainer}
+            horizontal={true}
+            pagingEnabled={true}
+            keyboardDismissMode='interactive'
+            showsHorizontalScrollIndicator={false}
+            ref={scroll}
+            onScroll={ (event) => {
+                Animated.spring(
+                    xOffset, {
+                        toValue: { x: event.nativeEvent.contentOffset.x / data.length, y: 0 },
+                        useNativeDriver: false,
+                        ...animatedEffect,
+                }).start()
 
-    componentWillUnmount() {
-        Dimensions.removeEventListener("change", this.onChange);
-    }
-
-    render() {
-        const { dimensions } = this.state;
-        const width = dimensions.window.width;
-        return(
-            <View style={[styles.root, { flexDirection: this.props.onTop ? 'column-reverse' : 'column'}]}>
-                <ScrollView
-                style={styles.mainContainer}
-                horizontal={true}
-                pagingEnabled={true}
-                keyboardDismissMode='interactive'
-                showsHorizontalScrollIndicator={false}
-                ref={ (node) => this.scroll = node }
-                onScroll={ (event) => {
-                    this.setState({ xOffset: event.nativeEvent.contentOffset.x / this.props.data.length })
-                    if ( (event.nativeEvent.contentOffset.x % width).toFixed(3) == 0 ) {
-                        console.log(event.nativeEvent.contentOffset.x);
-                        this.setState({ slideIndex: event.nativeEvent.contentOffset.x / width })
-                    } 
-                }} 
-                >
-                    {
-                        React.Children.map( this.props.children, (child, index) => {
-                            return (
-                                <View key={index} style={{ width: width }}>
-                                    {child}
-                                </View>
-                            ) 
-                        })
-                    }
-
-
-                </ScrollView>
+                if ( (event.nativeEvent.contentOffset.x % width).toFixed(3) == 0 ) {
+                    setSlideIndex(event.nativeEvent.contentOffset.x / width)
+                } 
+            }} 
+            >
                 {
-                    this.props.showBar
-                    ?
-                    <View style={[styles.slideBackground, { backgroundColor: this.props.backgroundColor, width: width }]}>
-                        <View style={[ styles.slideBackground, { width: width / this.props.data.length, backgroundColor: this.props.barColor, left: this.state.xOffset }]} />
-                    </View>
-                    :
-                    null
+                    React.Children.map( children, (child, index) => {
+                        return (
+                            <View key={index} style={{ width: width }}>
+                                {child}
+                            </View>
+                        ) 
+                    })
                 }
-                
-                <View style={[styles.navContainer, { backgroundColor: this.props.backgroundColor, width: width }]}>
-                    {
-                        this.props.data.map( (item, index) => {
-                            console.log(item)
-                            return (
-                                <TouchableOpacity key={index}
-                                onPress={ () => this.scroll.scrollTo({ x: index * width, animated: true })}
-                                >
-                                    { this.props.callbackRender(this.state.slideIndex, index, item) }
-                                </TouchableOpacity>
-                            )
-                        })
-                    }
+
+
+            </ScrollView>
+            {
+                showBar
+                ?
+                <View style={[styles.slideBackground, { backgroundColor: backgroundColor, width: width }]}>
+                    <Animated.View style={[ styles.slideBackground, { width: width / data.length, backgroundColor: barColor }, xOffset.getLayout() ]} />
                 </View>
-                
+                :
+                null
+            }
+            
+            <View style={[styles.navContainer, { backgroundColor: backgroundColor, width: width }]}>
+                {
+                    data.map( (item, index) => {
+                        return (
+                            <TouchableOpacity key={index}
+                            onPress={ () => scroll.current.scrollTo({ x: index * width, animated: true })}
+                            >
+                                { callbackRender(slideIndex, index, item) }
+                            </TouchableOpacity>
+                        )
+                    })
+                }
             </View>
-        )
-    }
+            
+        </View>
+    )
 }
 
 export default NavBar;

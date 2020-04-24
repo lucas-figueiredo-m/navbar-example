@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
-import { NavBar } from 'react-native-component-lib';
+//import { NavBar } from 'react-native-component-lib';
+import { NavBar } from './components/common';
 import ButtonScreen from './components/scenes/ButtonScreen/ButtonScreen';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 
@@ -47,6 +48,7 @@ class App extends Component {
       onTop={false}
       barColor={'#37027D'}
       showBar={true}
+      animatedEffect={{ tension: 200 }}
       >
         <ButtonScreen
         backgroundColor={'red'}
