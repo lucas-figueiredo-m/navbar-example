@@ -3,6 +3,7 @@ import { Text, StatusBar, View } from 'react-native';
 // import { NavBar } from 'react-native-component-lib';
 import { NavBar } from './components/common';
 import ButtonScreen from './components/scenes/ButtonScreen/ButtonScreen';
+import Page1 from './components/scenes/Page1/Page1';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 
 const testData = [
@@ -52,15 +53,12 @@ class App extends Component {
         showBar={true}
         animatedEffect={{ tension: 200 }}
         >
+          <Page1 />
           
           <ButtonScreen
           backgroundColor={'red'}
           onUpperPress={ this.upperCallback }
           onLowerPress={ this.lowerCallback }
-          />
-
-          <ButtonScreen
-          backgroundColor={'green'}
           />
 
           <ButtonScreen

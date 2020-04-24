@@ -32,6 +32,33 @@ const ButtonScreen = () => {
             outline={true} borderRadius={6} errorColor={'red'}
             error={'Internal server error'} errorIcon={ () => <Ionicon name='ios-close' size={24} color='red' />}
             />
+
+            <TextField label='E-mail' value={email}
+            onChangeText={ (text) => setEmail(text) }
+            focusColor={'#37027D'} blurColor={'#666666'}
+            backgroundColor={'#d9d9d9'}
+            labelStyle={styles.labelStyle}
+            containerStyle={styles.textContainerStyle}
+            textStyle={styles.textStyle}
+            errorStyle={styles.errorStyle}
+            highlightFontOnFocus={true}
+            outline={true} borderRadius={6} errorColor={'red'}
+            error={'Internal server error'} errorIcon={ () => <Ionicon name='ios-close' size={24} color='red' />}
+            />
+
+            <TextField label='E-mail' value={email}
+            onChangeText={ (text) => setEmail(text) }
+            focusColor={'#37027D'} blurColor={'#666666'}
+            secureTextEntry={secureText} backgroundColor={'#d9d9d9'}
+            secureTextComponent={ (secured) => secureTextComponent(secured) }
+            labelStyle={styles.labelStyle}
+            containerStyle={styles.textContainerStyle}
+            textStyle={styles.textStyle}
+            errorStyle={styles.errorStyle}
+            highlightFontOnFocus={true}
+            outline={true} borderRadius={6} errorColor={'red'}
+            error={'Internal server error'} errorIcon={ () => <Ionicon name='ios-close' size={24} color='red' />}
+            />
         </View>
     )
 }
