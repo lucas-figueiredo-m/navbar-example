@@ -29,7 +29,7 @@ const ButtonScreen = () => {
             textStyle={styles.textStyle}
             errorStyle={styles.errorStyle}
             highlightFontOnFocus={true}
-            outline={false} borderRadius={6} errorColor={'red'}
+            outline={true} borderRadius={6} errorColor={'red'}
             error={'error'} errorIcon={ () => <Ionicon name='ios-close' size={24} color='red' />}
             />
         </View>

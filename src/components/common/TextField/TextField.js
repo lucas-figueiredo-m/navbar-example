@@ -17,13 +17,13 @@ const TextField = (props) => {
 
   useEffect( () => {
     Animated.timing( animatedLabel, {
-      toValue: (isFocused || props.value !== '') ? 1 : 0,
+      toValue: props.error ? 2 : (isFocused || props.value !== '') ? 1 : 0,
       duration: 200,
       useNativeDriver: false
     }).start();
 
     Animated.timing( animatedView, {
-      toValue: (isFocused || props.value !== '') ? 1 : 0,
+      toValue: props.error ? 2 : (isFocused || props.value !== '') ? 1 : 0,
       duration: 200,
       useNativeDriver: false
     }).start();
@@ -37,28 +37,32 @@ const TextField = (props) => {
     position: 'absolute',
     left: props.outline ? width * 0.025 : 0,
     bottom: animatedLabel.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, props.outline ? viewHeight - 0.033 * height : viewHeight - 0.0218 * height ],
+      inputRange: [0, 1, 2],
+      outputRange: [
+        0,
+        props.outline ? viewHeight - 0.033 * height : viewHeight - 0.0218 * height,
+        props.outline ? viewHeight - 0.033 * height : viewHeight - 0.0218 * height
+      ],
     }),
     fontSize: animatedLabel.interpolate({
-      inputRange: [0, 1],
-      outputRange: [20, 14],
+      inputRange: [0, 1, 2],
+      outputRange: [20, 14, 14],
     }),
     color: animatedLabel.interpolate({
-      inputRange: [0, 1],
-      outputRange: [blurColor, focusColor],
+      inputRange: [0, 1, 2],
+      outputRange: [blurColor, focusColor, errorColor],
     }),
   }
 
   const outlineViewStyle = {
     borderWidth: animatedView.interpolate({
-      inputRange: [0, 1],
-      outputRange: [1, 1.5]
+      inputRange: [0, 1, 2],
+      outputRange: [1, 1.5, 1.5]
     }),
     borderRadius: props.borderRadius,
     borderColor: animatedView.interpolate({
-      inputRange: [0, 1],
-      outputRange: [blurColor, focusColor]
+      inputRange: [0, 1, 2],
+      outputRange: [blurColor, focusColor, errorColor]
     })
   }
 
@@ -66,8 +70,8 @@ const TextField = (props) => {
     borderBottomWidth: 1,
     borderRadius: props.borderRadius,
     borderBottomColor: animatedView.interpolate({
-      inputRange: [0, 1],
-      outputRange: [blurColor, focusColor]
+      inputRange: [0, 1, 2],
+      outputRange: [blurColor, focusColor, errorColor]
     })
   }
   
@@ -87,7 +91,7 @@ const TextField = (props) => {
         onFocus={ () => setFocus(true) }
         onBlur={ () => setFocus(false)}
         blurOnSubmit={true}
-        style={[ props.textStyle, { flex: 1, color: (isFocused || props.value !== '') ? props.highlightFontOnFocus ? focusColor : blurColor : blurColor } ]}
+        style={[ props.textStyle, { flex: 1, color: props.error ? errorColor : (isFocused || props.value !== '') ? props.highlightFontOnFocus ? focusColor : blurColor : blurColor } ]}
         />
         {
           props.secureTextComponent
