@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, TouchableWithoutFeedback, TouchableOpacity, Animated, Dimensions, Easing } from 'react-native';
+import { Text, View, TouchableHighlight, TouchableOpacity, Animated, Dimensions, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { styles } from './styles'
 
-const ActionButton = ({ children, mainIcon, buttons }) => {
+const ActionButton = ({ children, mainIcon, buttons, mainBackgroundColor, labelStyle }) => {
     const [active, setActive]             = useState(false);
     const [rotateAnimation, setRotate]    = useState( new Animated.Value(0) );
     const [slideButtons, setSlideButtons] = useState( new Animated.Value(0) );
-    const [opacity, setOpacity]           = useState( new Animated.Value(0) );
+    const [textOpacity, setTextOpacity]   = useState( new Animated.Value(0) );
+    const [viewOpacity, setViewOpacity]   = useState( new Animated.Value(0) );
 
     useEffect( () => {
         Animated.timing(rotateAnimation, {
@@ -21,7 +22,13 @@ const ActionButton = ({ children, mainIcon, buttons }) => {
             useNativeDriver: false
         }).start()
 
-        Animated.timing(opacity, {
+        Animated.timing(textOpacity, {
+            toValue: active ? 1 : 0,
+            duration: 500,
+            useNativeDriver: false
+        }).start()
+
+        Animated.timing(viewOpacity, {
             toValue: active ? 1 : 0,
             duration: 500,
             useNativeDriver: false
@@ -42,25 +49,30 @@ const ActionButton = ({ children, mainIcon, buttons }) => {
         }
     }
 
-    const textOpacity = opacity.interpolate({
+    const labelOpacity = textOpacity.interpolate({
         inputRange: [0, 1],
         outputRange: [0, 1]
     })
 
+    const shaderOpacity = viewOpacity.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 0.8]
+    })
+
     return (
         <View style={{ flex: 1 }}>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, zIndex: 1 }}>
                 { children }
             </View>
             
-            <Animated.View style={[ { transform: [{ rotate: spinButton }]}, styles.mainActionButton]}>
-                <TouchableOpacity
+            <Animated.View style={[ { transform: [{ rotate: spinButton }]}, styles.mainButtonContainer]}>
+                <TouchableHighlight
+                underlayColor={'red'}
                 onPress={ () => setActive(!active) }
-                activeOpacity={0.6}
-                style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+                style={[styles.mainButtonContent, { backgroundColor: mainBackgroundColor }]}
                 >
                     { mainIcon() }
-                </TouchableOpacity>
+                </TouchableHighlight>
             </Animated.View>
 
             {
@@ -69,8 +81,8 @@ const ActionButton = ({ children, mainIcon, buttons }) => {
                 buttons.map( (button, index) => {
                     return (
                         <Animated.View key={index} style={[ slideButtonsCallback(index), styles.secondaryButtonContainer ]}>
-                            <Animated.View opacity={textOpacity} style={ styles.labelContainer }>
-                                <Text style={[ styles.labelText]}>{button.label}</Text>
+                            <Animated.View opacity={labelOpacity} style={ styles.labelContainer }>
+                                <Text style={[ labelStyle, styles.labelText]}>{button.label}</Text>
                             </Animated.View>
                             
                             <TouchableOpacity
@@ -87,7 +99,9 @@ const ActionButton = ({ children, mainIcon, buttons }) => {
                 null
             }
 
-            {/* <Animated.View opacity={0.5} style={styles.blackView} /> */}
+            <Animated.View opacity={shaderOpacity} style={[StyleSheet.absoluteFill, { backgroundColor: 'black', zIndex: active ? 2 : 0 }]}>
+                <TouchableOpacity onPress={ () => setActive(false)} style={{ flex: 1 }} />
+            </Animated.View>
             
         </View>
         

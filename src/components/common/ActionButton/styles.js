@@ -11,23 +11,29 @@ export const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
 
-    mainActionButton: {
-        backgroundColor: 'red',
-        width: 60,
-        height: 60,
-        borderRadius: 50,
-        elevation: 5,
+    mainButtonContainer: {
+        
+        
         alignItems: 'center',
         justifyContent: 'center',
         position: 'absolute',
         bottom: 35,
         right: 35,
-        zIndex: 3
+        zIndex: 4
+    },
+
+    mainButtonContent: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 60,
+        height: 60,
+        borderRadius: 50,
+        elevation: 5,
     },
 
     secondaryButtonContainer: {
         right: 40,
-        zIndex: 2,
+        zIndex: 3,
         position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',

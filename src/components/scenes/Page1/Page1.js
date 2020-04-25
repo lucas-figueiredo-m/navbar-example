@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Dimensions, TouchableOpacity, Animated } from 'react-native';
 import { styles } from './styles'
 import Ionicon from 'react-native-vector-icons/Ionicons';
 // import { TextField } from 'react-native-component-lib';
 import { ActionButton } from '../../common';
+import { AndroidIcon } from '../../icons';
 
 const Page1 = () => {
 
@@ -32,9 +33,16 @@ const Page1 = () => {
         <View style={{ flex: 1, backgroundColor: 'white'}}>
             <ActionButton
             mainIcon={ () => <Ionicon name='ios-add' size={48} color={'white'} /> }
+            mainBackgroundColor={'red'}
             buttons={ data }
+            labelStyle={styles.labelStyle}
             >
-                <Text>hi</Text>
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <TouchableOpacity>
+                        <AndroidIcon />
+                    </TouchableOpacity>
+                </View>
+
             </ActionButton>
         </View>
         
