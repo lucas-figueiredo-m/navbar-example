@@ -25,16 +25,33 @@ export const styles = StyleSheet.create({
         zIndex: 3
     },
 
-    secondaryActionButton: {
+    secondaryButtonContainer: {
+        right: 40,
+        zIndex: 2,
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row'
+    },
+
+    secondaryButtonContent: {
         width: 50,
         height: 50,
         borderRadius: 50,
         elevation: 5,
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'absolute',
-        right: 40,
-        zIndex: 3
+    },
+
+
+    labelContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 20
+    },
+
+    labelText: {
+        textAlign: 'right'
     },
 
     blackView: {

@@ -11,17 +11,20 @@ const Page1 = () => {
         {
             icon: <Ionicon name='ios-person' size={30} color='white' />,
             backgroundColor: 'blue',
-            onPress: () => console.log('Item 1')
+            onPress: () => console.log('Item 1'),
+            label: 'Perfil'
         },
         {
-            icon: <Ionicon name='ios-brush' size={30} color='white' />,
+            icon: <Ionicon name='ios-information' size={30} color='white' />,
             backgroundColor: 'green',
-            onPress: () => console.log('Item 2')
+            onPress: () => console.log('Item 2'),
+            label: 'Sobre o app'
         },
         {
-            icon: <Ionicon name='ios-fitness' size={30} color='white' />,
-            backgroundColor: 'yellow',
-            onPress: () => console.log('Item 3')
+            icon: <Ionicon name='ios-log-out' size={30} color='white' />,
+            backgroundColor: 'black',
+            onPress: () => console.log('Item 3'),
+            label: 'Sair'
         }
     ]
  

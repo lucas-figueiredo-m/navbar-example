@@ -5,16 +5,23 @@ import { styles } from './styles'
 const ActionButton = ({ children, mainIcon, buttons }) => {
     const [active, setActive]             = useState(false);
     const [rotateAnimation, setRotate]    = useState( new Animated.Value(0) );
-    const [slideButtons, setSlideButtons] = useState( new Animated.Value(0) ); 
+    const [slideButtons, setSlideButtons] = useState( new Animated.Value(0) );
+    const [opacity, setOpacity]           = useState( new Animated.Value(0) );
 
     useEffect( () => {
         Animated.timing(rotateAnimation, {
             toValue: active ? 1 : 0,
-            duration: 200,
+            duration: 500,
             useNativeDriver: true
         }).start();
 
         Animated.timing(slideButtons, {
+            toValue: active ? 1 : 0,
+            duration: 500,
+            useNativeDriver: false
+        }).start()
+
+        Animated.timing(opacity, {
             toValue: active ? 1 : 0,
             duration: 500,
             useNativeDriver: false
@@ -34,6 +41,11 @@ const ActionButton = ({ children, mainIcon, buttons }) => {
             })
         }
     }
+
+    const textOpacity = opacity.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 1]
+    })
 
     return (
         <View style={{ flex: 1 }}>
@@ -56,11 +68,15 @@ const ActionButton = ({ children, mainIcon, buttons }) => {
                 ?
                 buttons.map( (button, index) => {
                     return (
-                        <Animated.View key={index} style={[ slideButtonsCallback(index), styles.secondaryActionButton, { backgroundColor: button.backgroundColor, zIndex: 2 }]}>
+                        <Animated.View key={index} style={[ slideButtonsCallback(index), styles.secondaryButtonContainer ]}>
+                            <Animated.View opacity={textOpacity} style={ styles.labelContainer }>
+                                <Text style={[ styles.labelText]}>{button.label}</Text>
+                            </Animated.View>
+                            
                             <TouchableOpacity
                             onPress={ button.onPress }
                             activeOpacity={0.6}
-                            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+                            style={[ styles.secondaryButtonContent, { backgroundColor: button.backgroundColor }]}
                             >
                                 { button.icon }
                             </TouchableOpacity>
