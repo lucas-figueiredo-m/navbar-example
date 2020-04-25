@@ -7,16 +7,34 @@ import { ActionButton } from '../../common';
 
 const Page1 = () => {
 
+    const data = [
+        {
+            icon: <Ionicon name='ios-person' size={40} color='white' />,
+            backgroundColor: 'blue',
+            onPress: () => console.log('Item 1')
+        },
+        {
+            icon: <Ionicon name='ios-brush' size={40} color='white' />,
+            backgroundColor: 'green',
+            onPress: () => console.log('Item 2')
+        },
+        {
+            icon: <Ionicon name='ios-fitness' size={40} color='white' />,
+            backgroundColor: 'yellow',
+            onPress: () => console.log('Item 3')
+        }
+    ]
+ 
     return (
-        <View style={styles.root}>
-
+        <View style={{ flex: 1, backgroundColor: 'white'}}>
             <ActionButton
             mainIcon={ () => <Ionicon name='ios-add' size={48} color={'white'} /> }
-            />
-
-            
-            
+            buttons={ data }
+            >
+                <Text>hi</Text>
+            </ActionButton>
         </View>
+        
     )
 }
 
