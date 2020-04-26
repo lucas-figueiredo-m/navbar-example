@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
 
     drawerView: {
         position: 'absolute',
-        backgroundColor: 'red',
+        backgroundColor: 'white',
         zIndex: 4
     }
 })

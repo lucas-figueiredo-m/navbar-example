@@ -6,23 +6,46 @@ const window = Dimensions.get("window");
 const screen = Dimensions.get("screen");
 
 const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawerRight, children }) => {
-    const [dimensions, setDimensions]       = useState({ window, screen });
-    const [active, setActive]               = useState(false);
-
-    const [rotateAnimation, setRotate]      = useState( new Animated.Value(0) );
-    const [drawerSlider, setDrawerSlider]   = useState( new Animated.Value(0) );
-    const [viewOpacity, setViewOpacity]     = useState( new Animated.Value(0) );
+    const [dimensions, setDimensions]          = useState({ window, screen });
+    const [active, setActive]                  = useState(false);
+   
+    const [rotateAnimation, setRotate]         = useState( new Animated.Value(0) );
+    const [viewOpacity, setViewOpacity]        = useState( new Animated.Value(0) );
+    const [drawerPosition, setDrawePosition]   = useState( new Animated.ValueXY({ x: -window.width * 0.8, y: 0}) );
 
     const onChange = ({ window, screen }) => {
         setDimensions({ window, screen });
     }
 
+    const panResponder = PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onPanResponderMove   : (event, gesture) => {
+            if ( gesture.moveX < drawerWidth ) {
+                drawerPosition.setValue({ x: gesture.moveX - drawerWidth, y: 0 })
+            }
+        },
+        onPanResponderRelease: (event, gesture) => {
+            if ( gesture.moveX < drawerWidth/2) {
+                Animated.timing(
+                    drawerPosition, {
+                        toValue: { x: -drawerWidth, y: 0 },
+                        duration: 250,
+                        useNativeDriver: false,
+                }).start()
+                setActive(false)
+            } else {
+                Animated.timing(
+                    drawerPosition, {
+                        toValue: { x: 0, y: 0 },
+                        duration: 250,
+                        useNativeDriver: false,
+                }).start()
+            }
+        }
+        
+    });
+
     useEffect( () => {
-        Animated.timing( drawerSlider, {
-            toValue: active ? 1 : 0,
-            duration: 500,
-            useNativeDriver: false
-        }).start()
 
         Animated.timing(rotateAnimation, {
             toValue: active ? 1 : 0,
@@ -47,13 +70,7 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
 
     const width  = dimensions.window.width;
     const height = dimensions.window.height;
-
     const drawerWidth = width * 0.8
-
-    const xDrawerTranslate = drawerSlider.interpolate({
-        inputRange: [0, 1],
-        outputRange: [-drawerWidth, 0]
-    })
 
     const spinButton = rotateAnimation.interpolate({
         inputRange: [0, 1],
@@ -71,8 +88,15 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
             <View style={[ styles.header, { zIndex: 1, width, height: height * 0.075, backgroundColor: backgroundColor, flexDirection: drawerRight ? 'row-reverse' : 'row' }]}>
                 
                 <Animated.View style={{ transform: [{ rotate: spinButton }] }}>
-                    <TouchableOpacity
-                    onPress={ () => setActive(!active) }
+                    <TouchableOpacity onPress={ () => {
+                        setActive(!active)
+                        Animated.timing(
+                            drawerPosition, {
+                                toValue: { x: 0, y: 0 },
+                                duration: 500,
+                                useNativeDriver: false,
+                        }).start()
+                    }}
                     >
                         { drawerIcon() }    
                     </TouchableOpacity>    
@@ -93,12 +117,25 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
                 { children }
             </View>
 
-            <Animated.View style={[ styles.drawerView, { height: height, width: drawerWidth, transform: [{ translateX: xDrawerTranslate }] } ]}>
+            <Animated.View
+            {...panResponder.panHandlers}
+            style={[ styles.drawerView, { height: height, width: drawerWidth, transform: drawerPosition.getTranslateTransform() } ]}>
 
             </Animated.View>
 
             <Animated.View opacity={shaderOpacity} style={[StyleSheet.absoluteFill, { backgroundColor: 'black', zIndex: active ? 2 : 0 }]}>
-                <TouchableOpacity onPress={ () => setActive(false)} style={{ flex: 1 }} />
+                <TouchableOpacity
+                onPress={ () => {
+                    setActive(false)
+                    Animated.timing(
+                        drawerPosition, {
+                            toValue: { x: -drawerWidth, y: 0 },
+                            duration: 500,
+                            useNativeDriver: false,
+                    }).start()
+                }}
+                style={{ flex: 1 }}
+                />
             </Animated.View>
             
         </View>
