@@ -67,7 +67,7 @@ const ActionButton = ({ children, mainIcon, buttons, mainBackgroundColor, labelS
             
             <Animated.View style={[ { transform: [{ rotate: spinButton }]}, styles.mainButtonContainer]}>
                 <TouchableHighlight
-                underlayColor={'red'}
+                underlayColor={mainBackgroundColor}
                 onPress={ () => setActive(!active) }
                 style={[styles.mainButtonContent, { backgroundColor: mainBackgroundColor }]}
                 >

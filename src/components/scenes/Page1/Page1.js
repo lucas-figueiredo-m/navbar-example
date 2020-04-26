@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Dimensions, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, Dimensions, TouchableOpacity, Animated, StyleSheet } from 'react-native';
 import { styles } from './styles'
 import Ionicon from 'react-native-vector-icons/Ionicons';
 // import { TextField } from 'react-native-component-lib';
@@ -24,7 +24,7 @@ const Page1 = () => {
         {
             icon: <Ionicon name='ios-log-out' size={30} color='white' />,
             backgroundColor: 'black',
-            onPress: () => console.log('Item 3'),
+            onPress: () => console.log('Item 3') ,
             label: 'Sair'
         }
     ]
@@ -33,15 +33,21 @@ const Page1 = () => {
         <View style={{ flex: 1, backgroundColor: 'white'}}>
             <ActionButton
             mainIcon={ () => <Ionicon name='ios-add' size={48} color={'white'} /> }
-            mainBackgroundColor={'red'}
+            mainBackgroundColor={'#37027D'}
             buttons={ data }
             labelStyle={styles.labelStyle}
             >
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <TouchableOpacity>
-                        <AndroidIcon />
-                    </TouchableOpacity>
+                <View style={[{width: 50, flexDirection: 'row', overflow: "hidden", alignSelf: 'flex-start' }]}>
+                    <AndroidIcon />
                 </View>
+
+                <View style={[{width: 50, flexDirection: 'row-reverse', overflow: "hidden", alignSelf: 'flex-end' }]}>
+                    <AndroidIcon />
+                </View>
+
+                {/*<Animated.View>
+                    <AndroidIcon active={true} />
+                </Animated.View>*/}
 
             </ActionButton>
         </View>
