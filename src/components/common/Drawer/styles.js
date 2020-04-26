@@ -11,12 +11,18 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: "space-between",
-        paddingHorizontal: width * 0.05
+        paddingHorizontal: width * 0.05,
+        zIndex: 1
     },
 
     drawerView: {
         position: 'absolute',
         backgroundColor: 'white',
         zIndex: 4
+    },
+
+    childrenStyle: {
+        flex: 1,
+        zIndex: 1
     }
 })

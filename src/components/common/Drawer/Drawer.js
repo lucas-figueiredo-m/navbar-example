@@ -1,5 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, Animated, PanResponder, Dimensions, TouchableOpacity, StyleSheet } from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { View, Animated,
+    PanResponder, Dimensions,
+    TouchableOpacity, StyleSheet
+} from 'react-native'
 import { styles } from './styles'
 
 const window = Dimensions.get("window");
@@ -13,9 +16,8 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
     const [viewOpacity, setViewOpacity]        = useState( new Animated.Value(0) );
     const [drawerPosition, setDrawePosition]   = useState( new Animated.ValueXY({ x: -window.width * 0.8, y: 0}) );
 
-    const onChange = ({ window, screen }) => {
-        setDimensions({ window, screen });
-    }
+    const onChange = ({ window, screen }) => setDimensions({ window, screen });
+    
 
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
@@ -46,7 +48,6 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
     });
 
     useEffect( () => {
-
         Animated.timing(rotateAnimation, {
             toValue: active ? 1 : 0,
             duration: 250,
@@ -62,10 +63,7 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
 
     useEffect( () => {
         Dimensions.addEventListener("change", onChange);
-
-        return () => {
-            Dimensions.removeEventListener("change", onChange);
-        }
+        return () => Dimensions.removeEventListener("change", onChange)
     }, [])
 
     const width  = dimensions.window.width;
@@ -85,7 +83,7 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
 
     return (
         <View style={styles.root}>
-            <View style={[ styles.header, { zIndex: 1, width, height: height * 0.075, backgroundColor: backgroundColor, flexDirection: drawerRight ? 'row-reverse' : 'row' }]}>
+            <View style={[ styles.header, { width, height: height * 0.075, backgroundColor: backgroundColor, flexDirection: drawerRight ? 'row-reverse' : 'row' }]}>
                 
                 <Animated.View style={{ transform: [{ rotate: spinButton }] }}>
                     <TouchableOpacity onPress={ () => {
@@ -113,7 +111,7 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
                 }
             </View>
 
-            <View style={{ flex: 1, zIndex: 1 }}>
+            <View style={styles.childrenStyle}>
                 { children }
             </View>
 

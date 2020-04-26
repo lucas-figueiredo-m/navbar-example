@@ -20,7 +20,7 @@ const Page2 = () => {
         <View style={{ flex: 1, backgroundColor: 'white'}}>
             <Drawer
             backgroundColor={'#37027D'}
-            drawerRight={false}
+            drawerRight={true}
             drawerIcon={ () => <MenuIcon fill={'black'} stroke={'white'} /> }
             headerText={ () => <Text style={{ color: 'white' }}>Component Lib</Text> }
             drawerChildren={ () => drawerChildren() }
