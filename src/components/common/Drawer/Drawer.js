@@ -5,7 +5,7 @@ import { styles } from './styles'
 const window = Dimensions.get("window");
 const screen = Dimensions.get("screen");
 
-const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawerRight, children }) => {
+const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawerRight, children, drawerChildren }) => {
     const [dimensions, setDimensions]          = useState({ window, screen });
     const [active, setActive]                  = useState(false);
    
@@ -120,7 +120,7 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
             <Animated.View
             {...panResponder.panHandlers}
             style={[ styles.drawerView, { height: height, width: drawerWidth, transform: drawerPosition.getTranslateTransform() } ]}>
-
+                { drawerChildren() }
             </Animated.View>
 
             <Animated.View opacity={shaderOpacity} style={[StyleSheet.absoluteFill, { backgroundColor: 'black', zIndex: active ? 2 : 0 }]}>

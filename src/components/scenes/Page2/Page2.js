@@ -7,6 +7,14 @@ import { Drawer } from '../../common';
 import { MenuIcon, AndroidIcon } from '../../icons';
 
 const Page2 = () => {
+
+    const drawerChildren = () => {
+        return (
+            <TouchableOpacity>
+                <AndroidIcon />
+            </TouchableOpacity>
+        )
+    }
  
     return (
         <View style={{ flex: 1, backgroundColor: 'white'}}>
@@ -15,6 +23,7 @@ const Page2 = () => {
             drawerRight={false}
             drawerIcon={ () => <MenuIcon fill={'black'} stroke={'white'} /> }
             headerText={ () => <Text style={{ color: 'white' }}>Component Lib</Text> }
+            drawerChildren={ () => drawerChildren() }
             //secondaryIcon={ () => <MenuIcon fill={'black'} stroke={'white'} /> }
             >
                 <TouchableOpacity>
