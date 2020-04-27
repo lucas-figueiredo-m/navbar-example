@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, TouchableHighlight, TouchableOpacity, Animated, Dimensions, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { styles } from './styles'
 
-const ActionButton = ({ children, mainIcon, buttons, mainBackgroundColor, labelStyle }) => {
+const ActionButton = ({ children, mainIcon, buttons, mainBackgroundColor, labelStyle, buttonRotation }) => {
     const [active, setActive]             = useState(false);
     const [rotateAnimation, setRotate]    = useState( new Animated.Value(0) );
     const [slideButtons, setSlideButtons] = useState( new Animated.Value(0) );
@@ -37,7 +37,7 @@ const ActionButton = ({ children, mainIcon, buttons, mainBackgroundColor, labelS
 
     const spinButton = rotateAnimation.interpolate({
         inputRange: [0, 1],
-        outputRange: ['0deg', '-45deg']
+        outputRange: ['0deg', buttonRotation]
     })
 
     const slideButtonsCallback = (index) => {

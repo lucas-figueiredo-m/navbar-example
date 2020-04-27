@@ -14,7 +14,7 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
    
     const [rotateAnimation, setRotate]         = useState( new Animated.Value(0) );
     const [viewOpacity, setViewOpacity]        = useState( new Animated.Value(0) );
-    const [drawerPosition, setDrawePosition]   = useState( new Animated.ValueXY({ x: -window.width * 0.8, y: 0}) );
+    const [drawerPosition, setDrawePosition]   = useState( new Animated.ValueXY({ x: drawerRight ? window.width : -window.width * 0.8, y: 0}) );
 
     const onChange = ({ window, screen }) => setDimensions({ window, screen });
     
@@ -22,27 +22,54 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onPanResponderMove   : (event, gesture) => {
-            if ( gesture.moveX < drawerWidth ) {
-                drawerPosition.setValue({ x: gesture.moveX - drawerWidth, y: 0 })
+            if ( drawerRight ) {
+                if ( gesture.moveX > width - drawerWidth ) {
+                    drawerPosition.setValue({ x: gesture.moveX, y: 0 })
+                }
+            } else {
+                if ( gesture.moveX < drawerWidth ) {
+                    drawerPosition.setValue({ x: gesture.moveX - drawerWidth, y: 0 })
+                }    
             }
+            
         },
         onPanResponderRelease: (event, gesture) => {
-            if ( gesture.moveX < drawerWidth/2) {
-                Animated.timing(
-                    drawerPosition, {
-                        toValue: { x: -drawerWidth, y: 0 },
-                        duration: 250,
-                        useNativeDriver: false,
-                }).start()
-                setActive(false)
+            if ( drawerRight ) {
+                if ( gesture.moveX > width - drawerWidth/2) {
+                    Animated.timing(
+                        drawerPosition, {
+                            toValue: { x: width, y: 0 },
+                            duration: 250,
+                            useNativeDriver: false,
+                    }).start()
+                    setActive(false)
+                } else {
+                    Animated.timing(
+                        drawerPosition, {
+                            toValue: { x: width - drawerWidth, y: 0 },
+                            duration: 250,
+                            useNativeDriver: false,
+                    }).start()
+                }
             } else {
-                Animated.timing(
-                    drawerPosition, {
-                        toValue: { x: 0, y: 0 },
-                        duration: 250,
-                        useNativeDriver: false,
-                }).start()
+                if ( gesture.moveX < drawerWidth/2) {
+                    Animated.timing(
+                        drawerPosition, {
+                            toValue: { x: -drawerWidth, y: 0 },
+                            duration: 250,
+                            useNativeDriver: false,
+                    }).start()
+                    setActive(false)
+                } else {
+                    Animated.timing(
+                        drawerPosition, {
+                            toValue: { x: 0, y: 0 },
+                            duration: 250,
+                            useNativeDriver: false,
+                    }).start()
+                }
             }
+            
         }
         
     });
@@ -72,7 +99,7 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
 
     const spinButton = rotateAnimation.interpolate({
         inputRange: [0, 1],
-        outputRange: ['0deg', '180deg']
+        outputRange: ['0deg', drawerRight ? '-180deg' : '180deg']
     })
 
     const shaderOpacity = viewOpacity.interpolate({
@@ -90,7 +117,7 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
                         setActive(!active)
                         Animated.timing(
                             drawerPosition, {
-                                toValue: { x: 0, y: 0 },
+                                toValue: { x: drawerRight ? width - drawerWidth : 0, y: 0 },
                                 duration: 500,
                                 useNativeDriver: false,
                         }).start()
@@ -127,7 +154,7 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
                     setActive(false)
                     Animated.timing(
                         drawerPosition, {
-                            toValue: { x: -drawerWidth, y: 0 },
+                            toValue: { x: drawerRight ? width : -drawerWidth, y: 0 },
                             duration: 500,
                             useNativeDriver: false,
                     }).start()

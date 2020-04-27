@@ -36,6 +36,7 @@ const Page1 = () => {
             mainBackgroundColor={'#37027D'}
             buttons={ data }
             labelStyle={styles.labelStyle}
+            buttonRotation='-45deg'
             >
                 <View style={[{width: 50, flexDirection: 'row', overflow: "hidden", alignSelf: 'flex-start' }]}>
                     <AndroidIcon />
