@@ -32,11 +32,11 @@ const Page1 = () => {
     return (
         <View style={{ flex: 1, backgroundColor: 'white'}}>
             <ActionButton
-            mainIcon={ () => <Ionicon name='ios-add' size={48} color={'white'} /> }
+            mainIcon={ () => <Ionicon name='ios-menu' size={36} color={'white'} /> }
             mainBackgroundColor={'#37027D'}
             buttons={ data }
             labelStyle={styles.labelStyle}
-            buttonRotation='-45deg'
+            buttonRotation='-180deg'
             >
                 <View style={[{width: 50, flexDirection: 'row', overflow: "hidden", alignSelf: 'flex-start' }]}>
                     <AndroidIcon />
