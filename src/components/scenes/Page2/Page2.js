@@ -21,6 +21,7 @@ const Page2 = () => {
             <Drawer
             backgroundColor={'#37027D'}
             drawerRight={true}
+            headerHeight={20}
             drawerIcon={ () => <MenuIcon fill={'black'} stroke={'white'} /> }
             headerText={ () => <Text style={{ color: 'white' }}>Component Lib</Text> }
             drawerChildren={ () => drawerChildren() }

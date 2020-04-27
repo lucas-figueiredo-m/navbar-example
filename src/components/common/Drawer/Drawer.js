@@ -8,7 +8,7 @@ import { styles } from './styles'
 const window = Dimensions.get("window");
 const screen = Dimensions.get("screen");
 
-const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawerRight, children, drawerChildren }) => {
+const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawerRight, children, drawerChildren, headerHeight }) => {
     const [dimensions, setDimensions]          = useState({ window, screen });
     const [active, setActive]                  = useState(false);
    
@@ -110,7 +110,14 @@ const Drawer = ({ backgroundColor, drawerIcon, headerText, secondaryIcon, drawer
 
     return (
         <View style={styles.root}>
-            <View style={[ styles.header, { width, height: height * 0.075, backgroundColor: backgroundColor, flexDirection: drawerRight ? 'row-reverse' : 'row' }]}>
+            {
+                headerHeight
+                ?
+                <View style={{ width, height: headerHeight, backgroundColor: backgroundColor }} />
+                :
+                null
+            }
+            <View style={[ styles.header, { width, height: height * 0.075 , backgroundColor: backgroundColor, flexDirection: drawerRight ? 'row-reverse' : 'row' }]}>
                 
                 <Animated.View style={{ transform: [{ rotate: spinButton }] }}>
                     <TouchableOpacity onPress={ () => {
