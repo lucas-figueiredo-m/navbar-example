@@ -133,29 +133,36 @@ const Picker = ({ children, onValueChange, leftIcon, searchIcon, cleanupIcon, pi
                 </Animated.View>
 
                 <Animated.View style={[{ height: searchIcon ? screen.height * 0.6 : screen.height * 0.4, transform: slideView.getTranslateTransform() }, styles.listContainer ]}>
-                    <View style={styles.searchContainer}>
-                        <View style={{ flex: 1 }}>
-                            {searchIcon}
+                    {
+                        searchIcon
+                        ?
+                        <View style={styles.searchContainer}>
+                            <View style={{ flex: 1 }}>
+                                {searchIcon}
+                            </View>
+                            
+                            <TextInput
+                            placeholder='Digite para pesquisar ...'
+                            style={[styles.searchInput, searchStyle]}
+                            value={filterString}
+                            
+                            onChangeText={ (text) => setFilterString(text) }
+                            />
+                            {
+                                filterString == ''
+                                ?
+                                <View style={{ flex: 1 }} />
+                                :
+                                <TouchableOpacity onPress={ () => setFilterString('') } style={{ flex: 1 }}>
+                                    {cleanupIcon}
+                                </TouchableOpacity>
+                            }
+                            
                         </View>
-                        
-                        <TextInput
-                        placeholder='Digite para pesquisar ...'
-                        style={[styles.searchInput, searchStyle]}
-                        value={filterString}
-                        
-                        onChangeText={ (text) => setFilterString(text) }
-                        />
-                        {
-                            filterString == ''
-                            ?
-                            <View style={{ flex: 1 }} />
-                            :
-                            <TouchableOpacity onPress={ () => setFilterString('') } style={{ flex: 1 }}>
-                                {cleanupIcon}
-                            </TouchableOpacity>
-                        }
-                        
-                    </View>
+                        :
+                        null
+                    }
+                    
                     <View style={{ flex: 1 }}>
                         <ScrollView style={styles.scrollContainer}>
                             {

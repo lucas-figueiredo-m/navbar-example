@@ -39,6 +39,7 @@ export const styles = StyleSheet.create({
     pickerItemContainer: {
         width: width,
         height: height * 0.055,
+        paddingHorizontal: width * 0.05,
         marginVertical: 2,
         backgroundColor: 'white',
         alignItems: 'center',
@@ -51,6 +52,6 @@ export const styles = StyleSheet.create({
     },
 
     scrollContainer: {
-        marginBottom: height * 0.05
+        marginBottom: height * 0.10
     }
 })
