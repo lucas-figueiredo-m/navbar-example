@@ -15,8 +15,6 @@ export const styles = StyleSheet.create({
     },
 
     pickerContainer: {
-        height: 100,
-        width: 80,
         zIndex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -36,5 +34,23 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: width * 0.05,
         marginBottom: height * 0.01
+    },
+
+    pickerItemContainer: {
+        width: width,
+        height: height * 0.055,
+        marginVertical: 2,
+        backgroundColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    searchInput: {
+        borderBottomWidth: 1,
+        flex: 8
+    },
+
+    scrollContainer: {
+        marginBottom: height * 0.05
     }
 })

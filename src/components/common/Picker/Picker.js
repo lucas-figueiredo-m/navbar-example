@@ -16,7 +16,7 @@ const PickerItem = ({ label, value, searchLabel, itemStyle }) => {
     )
 }
 
-const Picker = ({ children, onValueChange, leftIcon, searchIcon }) => {
+const Picker = ({ children, onValueChange, leftIcon, searchIcon, cleanupIcon, pickerStyle, labelStyle, searchStyle }) => {
     const [active, setActive]             = useState(false);
     const [pickerLabel, setPickerLabel]   = useState('');
     const [filterString, setFilterString] = useState('');
@@ -64,7 +64,6 @@ const Picker = ({ children, onValueChange, leftIcon, searchIcon }) => {
     }
 
     const dismissModal = () => {
-
         pickerAnimation(false)
         setTimeout( () => {
             setActive(false)
@@ -77,17 +76,26 @@ const Picker = ({ children, onValueChange, leftIcon, searchIcon }) => {
         onValueChange(value)
 
         pickerAnimation(false)
-
         setTimeout( () => {
             setActive(false)
             setFilterString('')
         }, 500)
     }
 
+    const removeAccent = (text) => {
+        text = text.toString().toLowerCase();
+        text = text.replace(new RegExp('[ÁÀÂÃáàâã]','gi'), 'a');
+        text = text.replace(new RegExp('[ÉÈÊéèê]','gi'), 'e');
+        text = text.replace(new RegExp('[ÍÌÎíìî]','gi'), 'i');
+        text = text.replace(new RegExp('[ÓÒÔÕóòôõ]','gi'), 'o');
+        text = text.replace(new RegExp('[ÚÙÛúùû]','gi'), 'u');
+        return text;  
+    }
+
     return (
         <View>
-            <TouchableOpacity style={styles.pickerContainer} onPress={ activateModal }>
-                <Text>
+            <TouchableOpacity style={[ pickerStyle, styles.pickerContainer]} onPress={ activateModal }>
+                <Text style={labelStyle}>
                 {
                     pickerLabel == ''
                     ?
@@ -126,37 +134,48 @@ const Picker = ({ children, onValueChange, leftIcon, searchIcon }) => {
 
                 <Animated.View style={[{ height: searchIcon ? screen.height * 0.6 : screen.height * 0.4, transform: slideView.getTranslateTransform() }, styles.listContainer ]}>
                     <View style={styles.searchContainer}>
-                        <View style={{ flex: 1}}>
+                        <View style={{ flex: 1 }}>
                             {searchIcon}
                         </View>
                         
                         <TextInput
                         placeholder='Digite para pesquisar ...'
-                        style={{ borderBottomWidth: 1, borderBottomColor: 'gray', flex: 8}}
+                        style={[styles.searchInput, searchStyle]}
                         value={filterString}
+                        
                         onChangeText={ (text) => setFilterString(text) }
                         />
+                        {
+                            filterString == ''
+                            ?
+                            <View style={{ flex: 1 }} />
+                            :
+                            <TouchableOpacity onPress={ () => setFilterString('') } style={{ flex: 1 }}>
+                                {cleanupIcon}
+                            </TouchableOpacity>
+                        }
+                        
                     </View>
                     <View style={{ flex: 1 }}>
-                        <ScrollView style={{ marginBottom: screen.height * 0.05 }}>
+                        <ScrollView style={styles.scrollContainer}>
                             {
                                 React.Children.map( children, (child, index) => {
                                     if ( filterString == '' ) {
                                         return (
                                             <TouchableOpacity
                                             key={index}
-                                            style={{ width: screen.width }}
+                                            style={styles.pickerItemContainer}
                                             onPress={ () => onItemChoose(child.props.label, child.props.value) }
                                             >
                                                 { child }
                                             </TouchableOpacity>
                                         )
                                     } else {
-                                        if (child.props.label.toString().toLowerCase().includes( filterString.toLowerCase() ) ) {
+                                        if ( removeAccent(child.props.label).includes( removeAccent(filterString) ) ) {
                                             return (
                                                 <TouchableOpacity
                                                 key={index}
-                                                style={{ width: screen.width }}
+                                                style={styles.pickerItemContainer}
                                                 onPress={ () => onItemChoose(child.props.label, child.props.value) }
                                                 >
                                                     { child }

@@ -6,15 +6,16 @@ import Ionicon from 'react-native-vector-icons/Ionicons';
 import { styles } from './styles';
 
 const Page3 = () => {
+    const [pickerState, setPickerState] = useState('')
     const hello = [
         'aeLLo1#@',
         'béllo2',
-        'cello3',
+        'cêllo3',
         'dello4',
-        'eello5',
-        'eello6',
+        'eellô5',
+        'eellõ6',
         'fello7',
-        'fello8',
+        'fellõ8',
         'fello9',
         'gello10',
         'Hello11',
@@ -29,9 +30,13 @@ const Page3 = () => {
     return (
         <View style={styles.root}>
             <Picker
-            onValueChange={ (value) => console.log('value', value)}
+            onValueChange={ (value) => setPickerState(value) }
             leftIcon={ <Ionicon name='ios-arrow-down' size={25} /> }
             searchIcon={ <Ionicon name='ios-search' size={30} /> }
+            cleanupIcon={ <Ionicon name='ios-backspace' size={30} /> }
+            labelStyle={{ fontSize: 18 }}
+            searchStyle={{ fontSize: 18, borderBottomColor: '#37027D' }}
+            pickerStyle={{ height: 50, width: 200 }}
             >
                 {
                     hello.map( ( hi, index) => {
