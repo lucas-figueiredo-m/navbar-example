@@ -4,8 +4,9 @@ import { Text, StatusBar, View } from 'react-native';
 import { NavBar } from './components/common';
 import ButtonScreen from './components/scenes/ButtonScreen/ButtonScreen';
 import Page1 from './components/scenes/Page1/Page1';
-import Ionicon from 'react-native-vector-icons/Ionicons';
 import Page2 from './components/scenes/Page2/Page2';
+import Page3 from './components/scenes/Page3/Page3';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 
 const testData = [
     'ios-home',
@@ -57,16 +58,16 @@ class App extends Component {
           <Page1 />
 
           <Page2 />
-          
+
           <ButtonScreen
           backgroundColor={'red'}
           onUpperPress={ this.upperCallback }
           onLowerPress={ this.lowerCallback }
           />
 
-          <ButtonScreen
-          backgroundColor={'blue'}
-          />
+          <Page3 />
+          
+          
           
         </NavBar>
       </View>

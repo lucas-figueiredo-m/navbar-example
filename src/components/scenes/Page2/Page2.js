@@ -3,7 +3,7 @@ import { View, Text, Dimensions, TouchableOpacity, Animated, StyleSheet } from '
 import { styles } from './styles'
 import Ionicon from 'react-native-vector-icons/Ionicons';
 // import { TextField } from 'react-native-component-lib';
-import { Drawer } from '../../common';
+import { Drawer, Picker } from '../../common';
 import { MenuIcon, AndroidIcon } from '../../icons';
 
 const Page2 = () => {
@@ -27,9 +27,13 @@ const Page2 = () => {
             drawerChildren={ () => drawerChildren() }
             //secondaryIcon={ () => <MenuIcon fill={'black'} stroke={'white'} /> }
             >
-                <TouchableOpacity>
-                    <AndroidIcon />
-                </TouchableOpacity>
+                {/**/}
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <TouchableOpacity>
+                        <AndroidIcon />
+                    </TouchableOpacity>
+                </View>
+                
             </Drawer>
         </View>
         
